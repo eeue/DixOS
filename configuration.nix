@@ -53,6 +53,14 @@
   hardware.opengl.enable = true;
   hardware.opengl.driSupport = true;
 
+  services.xserver.screenSection = ''
+    Option         "metamodes" "1920x1080_240 +0+0 {ForceFullCompositionPipeline=On}"
+    Option         "AllowIndirectGLXProtocol" "off"
+    Option         "TripleBuffer" "on"
+  '';
+  
+  
+
   # Configure keymap in X11
   # services.xserver.layout = "us";
   # services.xserver.xkbOptions = "eurosign:e";
@@ -73,6 +81,17 @@
     pulse.enable = true;
     # If you want to use JACK applications, uncomment this
     #jack.enable = true;
+  };
+
+
+  # X Compositor
+  services.picom = {
+    enable = true;
+    fade = true;
+    inactiveOpacity = 0.9;
+    shadow = true;
+    fadeDelta = 4;
+    backend = "glx";
   };
 
   system.autoUpgrade.enable = true;
