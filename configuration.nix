@@ -13,6 +13,10 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # Using A different kernel.
+  boot.kernelPackages = pkgs.linuxPackages_xanmod;
+  
+  
   networking.hostName = "heaven"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
