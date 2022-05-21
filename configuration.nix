@@ -39,19 +39,45 @@
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
-  # Enable window manager
-  services.xserver.windowManager.awesome.enable  = true;
-  # Default X Session
-  services.xserver.displayManager.defaultSession = "none+awesome";
-  # Auto Login
-  services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.displayManager.autoLogin.enable = true;
-  services.xserver.displayManager.autoLogin.user = "ares";
+  
+# Enable DE
+  services.xserver.desktopManager.gnome.enable = true;
+# Exclude Unused Gnome Packages
+  environment.gnome.excludePackages = [
+  pkgs.gnome.totem
+  pkgs.gnome.eog
+  pkgs.gnome.ghex
+  pkgs.gnome.gedit
+  pkgs.gnome.cheese
+  pkgs.gnome.gnome-maps
+  pkgs.gnome-photos
+  pkgs.gnome.gnome-music
+  pkgs.gnome.gucharmap
+  pkgs.epiphany
+  pkgs.gnome-online-accounts
+  pkgs.gnome.gnome-weather
+  pkgs.gnome-connections
+  pkgs.gnome.gnome-terminal
+  pkgs.gnome.gnome-calculator
+  pkgs.evince
+  pkgs.gnome.gnome-characters
+  pkgs.gnome.simple-scan
+  pkgs.gnome.gnome-contacts
+  pkgs.gnome.geary
+  pkgs.gnome.gnome-font-viewer
+  ];
+  
+ # Auto Login
+  services.xserver.displayManager.gdm.enable = true;
+ #services.xserver.displayManager.defaultSession = "none+i3";
+ #services.xserver.displayManager.autoLogin.enable = true;
+ #services.xserver.displayManager.autoLogin.user = "ares";
   
   # Enable nvidia drivers for the GPU.
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.opengl.enable = true;
   hardware.opengl.driSupport = true;
+  hardware.opengl.driSupport32Bit = true;
 
   services.xserver.screenSection = ''
     Option         "metamodes" "1920x1080_240 +0+0 {ForceFullCompositionPipeline=On}"
@@ -68,9 +94,9 @@
   # Enable CUPS to print documents.
   # services.printing.enable = true;
 
-  # Enable sound.
-  # sound.enable = true;
-  # hardware.pulseaudio.enable = true;
+  # Enable sound; Disable PulseAudio.
+  sound.enable = true;
+  hardware.pulseaudio.enable = false;
   
   # Enabling PipeWire
   security.rtkit.enable = true;
@@ -84,8 +110,8 @@
   };
 
 
-  # X Compositor
-  services.picom = {
+ # X Compositor
+ services.picom = {
     enable = true;
     fade = true;
     inactiveOpacity = 0.9;
@@ -105,6 +131,8 @@
      isNormalUser = true;
      extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
    };
+   programs.fish.enable = true;
+   users.defaultUserShell = pkgs.fish;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -126,7 +154,21 @@
      fish
      picom
      lightdm
+     lutris
+     steam
+     steamPackages.steam-runtime
+     i3-gaps
+     zip
+     unzip
+     gnome.gnome-tweaks
    ];
+
+   programs.steam = {
+       enable = true;
+       remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+       dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+   };
+   
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
