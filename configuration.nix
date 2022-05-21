@@ -5,10 +5,9 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [ # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -39,41 +38,41 @@
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
-  
-# Enable DE
+
+  # Enable DE
   services.xserver.desktopManager.gnome.enable = true;
-# Exclude Unused Gnome Packages
+  # Exclude Unused Gnome Packages
   environment.gnome.excludePackages = [
-  pkgs.gnome.totem
-  pkgs.gnome.eog
-  pkgs.gnome.ghex
-  pkgs.gnome.gedit
-  pkgs.gnome.cheese
-  pkgs.gnome.gnome-maps
-  pkgs.gnome-photos
-  pkgs.gnome.gnome-music
-  pkgs.gnome.gucharmap
-  pkgs.epiphany
-  pkgs.gnome-online-accounts
-  pkgs.gnome.gnome-weather
-  pkgs.gnome-connections
-  pkgs.gnome.gnome-terminal
-  pkgs.gnome.gnome-calculator
-  pkgs.evince
-  pkgs.gnome.gnome-characters
-  pkgs.gnome.simple-scan
-  pkgs.gnome.gnome-contacts
-  pkgs.gnome.geary
-  pkgs.gnome.gnome-font-viewer
+    pkgs.gnome.totem
+    pkgs.gnome.eog
+    pkgs.gnome.ghex
+    pkgs.gnome.gedit
+    pkgs.gnome.cheese
+    pkgs.gnome.gnome-maps
+    pkgs.gnome-photos
+    pkgs.gnome.gnome-music
+    pkgs.gnome.gucharmap
+    pkgs.epiphany
+    pkgs.gnome-online-accounts
+    pkgs.gnome.gnome-weather
+    pkgs.gnome-connections
+    pkgs.gnome.gnome-terminal
+    pkgs.gnome.gnome-calculator
+    pkgs.evince
+    pkgs.gnome.gnome-characters
+    pkgs.gnome.simple-scan
+    pkgs.gnome.gnome-contacts
+    pkgs.gnome.geary
+    pkgs.gnome.gnome-font-viewer
   ];
-  
- # Auto Login
+
+  # Auto Login
   services.xserver.displayManager.gdm.enable = true;
- # services.xserver.displayManager.defaultSession = "none+i3";
- # services.xserver.displayManager.autoLogin.enable = true;
- # services.xserver.displayManager.autoLogin.user = "ares";
-  
- # Enable nvidia drivers for the GPU.
+  # services.xserver.displayManager.defaultSession = "none+i3";
+  # services.xserver.displayManager.autoLogin.enable = true;
+  # services.xserver.displayManager.autoLogin.user = "ares";
+
+  # Enable nvidia drivers for the GPU.
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.opengl.enable = true;
   hardware.opengl.driSupport = true;
@@ -84,8 +83,6 @@
     Option         "AllowIndirectGLXProtocol" "off"
     Option         "TripleBuffer" "on"
   '';
-  
-  
 
   # Configure keymap in X11
   # services.xserver.layout = "us";
@@ -97,7 +94,7 @@
   # Enable sound; Disable PulseAudio.
   sound.enable = true;
   hardware.pulseaudio.enable = false;
-  
+
   # Enabling PipeWire
   security.rtkit.enable = true;
   services.pipewire = {
@@ -105,13 +102,12 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
- # If you want to use JACK applications, uncomment this
- # jack.enable = true;
+    # If you want to use JACK applications, uncomment this
+    # jack.enable = true;
   };
 
-
- # X Compositor
- services.picom = {
+  # X Compositor
+  services.picom = {
     enable = true;
     fade = true;
     inactiveOpacity = 0.9;
@@ -126,49 +122,50 @@
   # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-     users.users.ares = {
-     home = "/home/ares";
-     isNormalUser = true;
-     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-   };
-   programs.fish.enable = true;
-   users.defaultUserShell = pkgs.fish;
+  users.users.ares = {
+    home = "/home/ares";
+    isNormalUser = true;
+    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+  };
+  programs.fish.enable = true;
+  users.defaultUserShell = pkgs.fish;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
 
-   nixpkgs.config.allowUnfree = true;
-   environment.systemPackages = with pkgs; [
-     micro # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-     wget
-     git
-     alacritty
-     wine-staging
-     winePackages.stagingFull
-     firefox
-     discord
-     pipewire
-     xsel
-     neofetch
-     awesome
-     fish
-     picom
-     lightdm
-     lutris
-     steam
-     steamPackages.steam-runtime
-     i3-gaps
-     zip
-     unzip
-     gnome.gnome-tweaks
-   ];
+  nixpkgs.config.allowUnfree = true;
+  environment.systemPackages = with pkgs; [
+    micro # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    wget
+    git
+    alacritty
+    wine-staging
+    winePackages.stagingFull
+    firefox
+    discord
+    pipewire
+    xsel
+    neofetch
+    awesome
+    fish
+    picom
+    lightdm
+    lutris
+    steam
+    steamPackages.steam-runtime
+    i3-gaps
+    zip
+    unzip
+    gnome.gnome-tweaks
+  ];
 
-   programs.steam = {
-       enable = true;
-       remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-       dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
-   };
-   
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall =
+      true; # Open ports in the firewall for Steam Remote Play
+    dedicatedServer.openFirewall =
+      true; # Open ports in the firewall for Source Dedicated Server
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -198,4 +195,3 @@
   system.stateVersion = "21.11"; # Did you read the comment?
 
 }
-
