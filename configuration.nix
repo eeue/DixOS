@@ -69,11 +69,11 @@
   
  # Auto Login
   services.xserver.displayManager.gdm.enable = true;
- #services.xserver.displayManager.defaultSession = "none+i3";
- #services.xserver.displayManager.autoLogin.enable = true;
- #services.xserver.displayManager.autoLogin.user = "ares";
+ # services.xserver.displayManager.defaultSession = "none+i3";
+ # services.xserver.displayManager.autoLogin.enable = true;
+ # services.xserver.displayManager.autoLogin.user = "ares";
   
-  # Enable nvidia drivers for the GPU.
+ # Enable nvidia drivers for the GPU.
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.opengl.enable = true;
   hardware.opengl.driSupport = true;
@@ -105,8 +105,8 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
+ # If you want to use JACK applications, uncomment this
+ # jack.enable = true;
   };
 
 
