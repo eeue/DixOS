@@ -39,38 +39,14 @@
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
-  # Enable DE
-  services.xserver.desktopManager.gnome.enable = true;
-  # Exclude Unused Gnome Packages
-  environment.gnome.excludePackages = [
-    pkgs.gnome.totem
-    pkgs.gnome.eog
-    pkgs.gnome.ghex
-    pkgs.gnome.gedit
-    pkgs.gnome.cheese
-    pkgs.gnome.gnome-maps
-    pkgs.gnome-photos
-    pkgs.gnome.gnome-music
-    pkgs.gnome.gucharmap
-    pkgs.epiphany
-    pkgs.gnome-online-accounts
-    pkgs.gnome.gnome-weather
-    pkgs.gnome-connections
-    pkgs.gnome.gnome-terminal
-    pkgs.gnome.gnome-calculator
-    pkgs.evince
-    pkgs.gnome.gnome-characters
-    pkgs.gnome.simple-scan
-    pkgs.gnome.gnome-contacts
-    pkgs.gnome.geary
-    pkgs.gnome.gnome-font-viewer
-  ];
-
+  # Enable DE/WM
+  services.xserver.windowManager.awesome.enable = true;
+  
   # Auto Login
-  services.xserver.displayManager.gdm.enable = true;
-  # services.xserver.displayManager.defaultSession = "none+i3";
-  # services.xserver.displayManager.autoLogin.enable = true;
-  # services.xserver.displayManager.autoLogin.user = "ares";
+  services.xserver.displayManager.lightdm.enable = true;
+  services.xserver.displayManager.defaultSession = "none+awesome";
+  services.xserver.displayManager.autoLogin.enable = true;
+  services.xserver.displayManager.autoLogin.user = "ares";
 
   # Enable nvidia drivers for the GPU.
   services.xserver.videoDrivers = [ "nvidia" ];
@@ -153,10 +129,8 @@
     lutris
     steam
     steamPackages.steam-runtime
-    i3-gaps
     zip
     unzip
-    gnome.gnome-tweaks
   ];
 
   programs.steam = {
