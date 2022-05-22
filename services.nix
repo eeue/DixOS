@@ -1,3 +1,5 @@
+{ config, pkgs, ... }:
+
 {
 # X.org/Display Services
 
@@ -55,6 +57,12 @@ hardware.pulseaudio.enable = false;
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
+
+# Flatpak
+
+services.flatpak.enable = true;
+xdg.portal.enable = true;
+#xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
  
 
 }
